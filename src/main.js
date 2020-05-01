@@ -4,12 +4,14 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import acl from './plugins/acl'
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   store,
+  acl,
   vuetify,
   render: h => h(App)
 }).$mount("#app");
