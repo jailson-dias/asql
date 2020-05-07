@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Login from "../views/Login.vue";
-import HomeStudent from "../views/HomeStudent.vue";
+import HomeStudent from "../views/student/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -16,11 +16,32 @@ const routes = [
   },
   {
     path: "/",
-    name: "Home Student",
+    name: "Student",
     component: HomeStudent,
-    meta: {
-      rule: "isPublic",
-    },
+    children: [
+      {
+        path: "/",
+        name: "Home",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/student/Exercises.vue"
+          ),
+        meta: {
+          rule: "isPublic",
+        },
+      },
+      {
+        path: "/question/:id",
+        name: "Question",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "../views/student/Question.vue"
+          ),
+        meta: {
+          rule: "isPublic",
+        },
+      },
+    ],
   },
   {
     path: "/about",
