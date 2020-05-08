@@ -31,7 +31,7 @@
                   required
                 ></v-checkbox> -->
 
-                <v-btn class="mt-6 mb-3" color="primary">Login</v-btn>
+                <v-btn to="/" class="mt-6 mb-3" color="primary">Login</v-btn>
 
                 <!-- <v-btn color="warning" @click="resetValidation"
                   >Reset Validation</v-btn

@@ -4,7 +4,12 @@
       <v-col cols></v-col>
       <h2 class="text-center">Questão {{ question }}</h2>
       <v-col cols></v-col>
-      <v-btn class="mr-4" color="primary" icon>
+      <v-btn
+        class="mr-4"
+        color="primary"
+        icon
+        :to="`/question/${parseInt(question) + 1}`"
+      >
         <v-icon large>mdi-arrow-right</v-icon>
       </v-btn>
     </v-row>

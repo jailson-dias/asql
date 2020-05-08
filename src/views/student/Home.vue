@@ -6,7 +6,7 @@
       </div>
       <v-list dense>
         <template v-for="item in items">
-          <v-list-item :key="item.text" link>
+          <v-list-item :key="item.text" link :to="item.to">
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -27,9 +27,9 @@
       dark
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
+      <!-- <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">Google Contacts</span>
-      </v-toolbar-title>
+      </v-toolbar-title> -->
       <!-- <v-text-field
         flat
         solo-inverted
@@ -39,13 +39,13 @@
         class="hidden-sm-and-down"
       /> -->
       <v-spacer />
-      <v-btn icon>
+      <!-- <v-btn icon>
         <v-icon>mdi-apps</v-icon>
       </v-btn>
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
-      </v-btn>
-      <v-btn icon large>
+      </v-btn> -->
+      <v-btn icon large to="/">
         <v-avatar size="32px" item>
           <v-img
             src="https://cdn.vuetifyjs.com/images/logos/logo.svg"
@@ -60,44 +60,13 @@
 </template>
 
 <script>
-// import Exercise from "@/components/Exercise";
 export default {
-  components: {
-    // Exercise
-  },
   data: () => ({
-    dialog: false,
     drawer: null,
-    exercises: [{}, {}, {}, {}, {}],
     items: [
-      { icon: "mdi-contacts", text: "Atividades" },
-      { icon: "mdi-history", text: "Finalizadas" },
-      { icon: "mdi-content-copy", text: "Sair" }
-      // {
-      //   icon: "mdi-chevron-up",
-      //   "icon-alt": "mdi-chevron-down",
-      //   text: "Labels",
-      //   model: true,
-      //   children: [{ icon: "mdi-plus", text: "Create label" }]
-      // },
-      // {
-      //   icon: "mdi-chevron-up",
-      //   "icon-alt": "mdi-chevron-down",
-      //   text: "More",
-      //   model: false,
-      //   children: [
-      //     { text: "Import" },
-      //     { text: "Export" },
-      //     { text: "Print" },
-      //     { text: "Undo changes" },
-      //     { text: "Other contacts" }
-      //   ]
-      // },
-      // { icon: "mdi-settings", text: "Settings" },
-      // { icon: "mdi-message", text: "Send feedback" },
-      // { icon: "mdi-help-circle", text: "Help" },
-      // { icon: "mdi-cellphone-link", text: "App downloads" },
-      // { icon: "mdi-keyboard", text: "Go to the old version" }
+      { icon: "mdi-contacts", text: "Atividades", to: "/" },
+      { icon: "mdi-history", text: "Finalizadas", to: "/te" },
+      { icon: "mdi-content-copy", text: "Sair", to: "/login" }
     ]
   })
 };

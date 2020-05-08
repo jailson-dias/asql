@@ -1,24 +1,78 @@
 <template>
-  <v-card class="my-1" width="100%" outlined>
+  <v-card class="my-2" width="100%" outlined>
     <v-list-item three-line>
       <v-list-item-content>
-        <!-- <div class="overline mb-4">OVERLINE</div> -->
-        <v-list-item-title class="headline mb-1">Atividade 5</v-list-item-title>
-        <!-- <v-list-item-subtitle
-          >Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle
-        > -->
-        <p>Questão 1 <v-icon color="primary">mdi-check</v-icon></p>
-        <p>Questão 1 <v-icon color="primary">mdi-close</v-icon></p>
-        <p>Questão 1</p>
-        <p>Questão 1</p>
+        <v-list-item-title class="headline mb-1">{{
+          getExerciseTitle("Questão 1 jkashfgasdjkfhasdf sd fgjksadhfk")
+        }}</v-list-item-title>
+        <v-row
+          class="my-n1"
+          v-for="(question, index) in questions"
+          :key="index"
+        >
+          <v-col cols>
+            <v-divider class="mb-2"></v-divider>
+            <p class="mt-0 mb-2 question-text">
+              {{ question.title }}
+            </p>
+            <div>
+              <span v-if="question.complete < 99.999" class="mr-2"
+                >{{ question.complete }}%</span
+              >
+              <v-icon v-if="question.complete > 99.999" color="primary"
+                >mdi-check</v-icon
+              >
+              <v-btn
+                v-else
+                color="primary"
+                text
+                :to="`/question/${question.id}`"
+              >
+                Resolver
+              </v-btn>
+            </div>
+          </v-col>
+        </v-row>
       </v-list-item-content>
-
-      <!-- <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar> -->
     </v-list-item>
-
-    <!-- <v-card-actions>
-      <v-btn text>Button</v-btn>
-      <v-btn text>Button</v-btn>
-    </v-card-actions> -->
   </v-card>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    questions: [
+      {
+        title:
+          "Question 1 asfjkahsdfkjhasdjkfhsajkdhfjhas sd f ads g sa g dsg sdf gdhgfjhasjkfhsjkahgfhsajhfjkashfjsa",
+        complete: 55.98657,
+        id: 4
+      },
+      {
+        title: "Questão 2",
+        complete: 100
+      },
+      { id: 7 },
+      {},
+      {},
+      {},
+      {}
+    ]
+  }),
+  methods: {
+    getExerciseTitle(title) {
+      let titleLength = 50;
+      if (!title || !title.length || title.length < titleLength) {
+        return title;
+      }
+      return (title || "").slice(0, titleLength) + "...";
+    }
+  }
+};
+</script>
+
+<style>
+.question-text {
+  line-height: 21px;
+}
+</style>
