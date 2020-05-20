@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-content>
-      <v-container class="fill-height" fluid>
+      <v-container class="fill-height background-image-asql" fluid>
         <v-row align="center" justify="center">
           <v-col cols="12" sm="8" md="4">
             <v-card class="pa-5 text-center" max-width="450">
@@ -67,3 +67,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.background-image-asql {
+  background-image: url("../assets/background.jpg");
+  background-size: cover;
+}
+</style>
