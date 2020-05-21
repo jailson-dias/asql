@@ -1,0 +1,240 @@
+<template>
+  <v-container class="mx-2 my-1" fluid>
+    <v-row align="start" justify="center" class="mt-3">
+      <v-col cols></v-col>
+      <h2 class="text-center">Questão {{ question }}</h2>
+      <v-col cols></v-col>
+      <v-btn
+        class="mr-4"
+        color="primary"
+        icon
+        :to="`/question/${parseInt(question) + 1}`"
+      >
+        <v-icon large>mdi-arrow-right</v-icon>
+      </v-btn>
+    </v-row>
+    <v-row align="start" justify="center">
+      <v-col cols>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis, ab
+          est. Expedita, incidunt sed molestiae repudiandae facere eum explicabo
+          necessitatibus ullam a quaerat quidem aliquid, eaque sit ipsam
+          quisquam aperiam!
+        </p>
+      </v-col>
+    </v-row>
+    <v-row align="stretch" justify="center">
+      <v-col cols class="mr-2">
+        <codemirror
+          ref="codemirror"
+          v-model="code"
+          :options="cmOptions"
+          @cursorActivity="cursorActivity"
+          class="codemirror-question"
+        />
+      </v-col>
+    </v-row>
+    <v-row align="stretch" justify="end">
+      <div class="col">
+        <span>Similaridade da resposta: 80%</span>
+      </div>
+      <div class="mr-6">
+        <v-btn
+          class="mr-2"
+          color="primary"
+          icon
+          :disabled="selectedCode.length < 5"
+        >
+          <v-icon>mdi-play-box-multiple</v-icon>
+        </v-btn>
+        <v-btn color="primary" icon>
+          <v-icon large>mdi-play</v-icon>
+        </v-btn>
+      </div>
+    </v-row>
+    <v-row align="stretch" justify="center">
+      <v-col cols class="mr-2">
+        <h2>Resultado da consulta</h2>
+        <v-data-table
+          :headers="headers"
+          :items="desserts"
+          disable-sort
+          fixed-header
+          calculate-widths
+          item-key="name"
+          class="elevation-1"
+        ></v-data-table>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import { codemirror } from "vue-codemirror";
+
+import "codemirror/lib/codemirror.css";
+import "codemirror/addon/hint/show-hint.css";
+import "codemirror/lib/codemirror";
+import "codemirror/mode/sql/sql";
+import "codemirror/addon/hint/show-hint";
+import "codemirror/addon/search/searchcursor";
+import "codemirror/addon/search/search";
+import "codemirror/addon/display/placeholder";
+import "codemirror/addon/hint/sql-hint";
+import "codemirror/addon/hint/anyword-hint";
+
+export default {
+  components: {
+    codemirror
+  },
+  data: () => ({
+    code: "-- Código SQL\nselect x from y;",
+    cmOptions: {
+      mode: "text/x-sql",
+      lineNumbers: true,
+      tabSize: 4,
+      autofocus: true,
+      styleActiveLine: true,
+      matchBrackets: true,
+      lineWrapping: true,
+      extraKeys: {
+        Ctrl: "autocomplete"
+      },
+      foldGutter: true,
+      placeholder: "Escreva sua solução aqui"
+    },
+    selectedCode: "",
+    desserts: [
+      {
+        name: "Frozen Yogurt",
+        calories: 159,
+        fat: 6.0,
+        carbs: 24,
+        protein: 4.0,
+        iron: "1%"
+      },
+      {
+        name: "Ice cream sandwich",
+        calories: 237,
+        fat: 9.0,
+        carbs: 37,
+        protein: 4.3,
+        iron: "1%"
+      },
+      {
+        name: "Eclair",
+        calories: 262,
+        fat: 16.0,
+        carbs: 23,
+        protein: 6.0,
+        iron: "7%"
+      },
+      {
+        name: "Cupcake",
+        calories: 305,
+        fat: 3.7,
+        carbs: 67,
+        protein: 4.3,
+        iron: "8%"
+      },
+      {
+        name: "Gingerbread",
+        calories: 356,
+        fat: 16.0,
+        carbs: 49,
+        protein: 3.9,
+        iron: "16%"
+      },
+      {
+        name: "Jelly bean",
+        calories: 375,
+        fat: 0.0,
+        carbs: 94,
+        protein: 0.0,
+        iron: "0%"
+      },
+      {
+        name: "Lollipop",
+        calories: 392,
+        fat: 0.2,
+        carbs: 98,
+        protein: 0,
+        iron: "2%"
+      },
+      {
+        name: "Honeycomb",
+        calories: 408,
+        fat: 3.2,
+        carbs: 87,
+        protein: 6.5,
+        iron: "45%"
+      },
+      {
+        name: "Donut",
+        calories: 452,
+        fat: 25.0,
+        carbs: 51,
+        protein: 4.9,
+        iron: "22%"
+      },
+      {
+        name: "KitKat",
+        calories: 518,
+        fat: 26.0,
+        carbs: 65,
+        protein: 7,
+        iron: "6%"
+      }
+    ],
+    headers: [
+      {
+        text: "Dessert (100g serving)",
+        value: "name"
+      },
+      { text: "Calories", value: "calories" },
+      { text: "Fat (g)", value: "fat" },
+      { text: "Carbs (g)", value: "carbs" },
+      { text: "Protein (g)", value: "protein" },
+      { text: "Iron (%)", value: "iron" },
+      { text: "Calories", value: "calories" },
+      { text: "Fat (g)", value: "fat" },
+      { text: "Carbs (g)", value: "carbs" },
+      { text: "Protein (g)", value: "protein" },
+      { text: "Iron (%)", value: "iron" },
+      { text: "Calories", value: "calories" },
+      { text: "Fat (g)", value: "fat" },
+      { text: "Carbs (g)", value: "carbs" },
+      { text: "Protein (g)", value: "protein" },
+      { text: "Iron (%)", value: "iron" },
+      { text: "Calories", value: "calories" },
+      { text: "Fat (g)", value: "fat" },
+      { text: "Carbs (g)", value: "carbs" },
+      { text: "Protein (g)", value: "protein" },
+      { text: "Iron (%)", value: "iron" }
+    ]
+  }),
+  computed: {
+    question() {
+      return this.$route.params.id;
+    }
+  },
+  methods: {
+    cursorActivity(codemirror) {
+      this.selectedCode = codemirror.getSelection();
+    }
+  }
+};
+</script>
+
+<style scoped>
+.codemirror-question {
+  width: 100%;
+  border: 1px solid black;
+}
+</style>
+
+<style>
+.v-data-table {
+  max-width: 100%;
+}
+</style>
