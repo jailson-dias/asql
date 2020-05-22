@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "../views/Login.vue";
 import HomeStudent from "../views/student/Home.vue";
 
 Vue.use(VueRouter);
@@ -9,10 +8,22 @@ const routes = [
   {
     path: "/login",
     name: "Login",
-    component: Login,
+    component: () =>
+      import(/* webpackChunkName: "exercises" */ "../views/Login.vue"),
     meta: {
-      rule: "isPublic",
-    },
+      rule: "isPublic"
+    }
+  },
+  {
+    path: "/recovery",
+    name: "Recovery",
+    component: () =>
+      import(
+        /* webpackChunkName: "exercises" */ "../views/RecoveryPassword.vue"
+      ),
+    meta: {
+      rule: "isPublic"
+    }
   },
   {
     path: "/",
@@ -27,8 +38,8 @@ const routes = [
             /* webpackChunkName: "exercises" */ "../views/student/Exercises.vue"
           ),
         meta: {
-          rule: "isPublic",
-        },
+          rule: "isPublic"
+        }
       },
       {
         path: "/question/:id",
@@ -38,17 +49,17 @@ const routes = [
             /* webpackChunkName: "question" */ "../views/student/Question.vue"
           ),
         meta: {
-          rule: "isPublic",
-        },
-      },
-    ],
-  },
+          rule: "isPublic"
+        }
+      }
+    ]
+  }
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
 
 export default router;

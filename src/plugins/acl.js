@@ -8,7 +8,7 @@ export default new AclCreate({
   initial: "public",
   notfound: {
     path: "/error",
-    forwardQueryParams: true,
+    forwardQueryParams: true
   },
   router,
   acceptLocalRules: false,
@@ -16,10 +16,9 @@ export default new AclCreate({
     isAdmin: new AclRule("admin").generate(),
     isPublic: new AclRule("public").or("admin").generate(),
     isLogged: new AclRule("user").and("inside").generate(),
-    isStudent: new AclRule("student").and("inside").generate(),
+    isStudent: new AclRule("student").and("inside").generate()
   },
-  middleware: async (acl) => {
-    // await timeout(2000); // call your api
+  middleware: async acl => {
     acl.change("admin");
-  },
+  }
 });
