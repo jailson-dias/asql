@@ -8,7 +8,7 @@
         >
           <v-col cols="12" sm="9" md="5">
             <v-card class="py-12 px-12 text-center" max-width="550">
-              <img class="" src="@/assets/logo.png" alt="Logo" width="150" />
+              <img src="@/assets/logo.png" alt="Logo" width="150" />
               <h1 class="display-2 mt-4">Login</h1>
               <p class="headline font-regular mx-8 mt-4">
                 Digite o email e senha para fazer login
@@ -30,24 +30,17 @@
                   outlined
                 ></v-text-field>
                 <v-row class="mx-0 mt-n6" justify="space-between">
-                  <a>Sou professor</a>
-                  <a>Cadastrar</a>
+                  <v-btn to="/signup" text color="primary" class="pl-0"
+                    >Cadastrar</v-btn
+                  >
+                  <v-btn to="/recovery" text color="primary" class="pr-0"
+                    >Recuperar senha</v-btn
+                  >
                 </v-row>
-
-                <!-- <v-checkbox
-                  v-model="checkbox"
-                  :rules="[v => !!v || 'You must agree to continue!']"
-                  label="Do you agree?"
-                  required
-                ></v-checkbox>-->
 
                 <v-btn to="/" class="mt-6 mb-3" block color="primary" large
                   >Login</v-btn
                 >
-
-                <!-- <v-btn color="warning" @click="resetValidation"
-                  >Reset Validation</v-btn
-                >-->
               </v-form>
             </v-card>
           </v-col>

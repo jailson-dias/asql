@@ -9,7 +9,7 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () =>
-      import(/* webpackChunkName: "exercises" */ "../views/Login.vue"),
+      import(/* webpackChunkName: "Login" */ "../views/Login.vue"),
     meta: {
       rule: "isPublic"
     }
@@ -19,10 +19,20 @@ const routes = [
     name: "Recovery",
     component: () =>
       import(
-        /* webpackChunkName: "exercises" */ "../views/RecoveryPassword.vue"
+        /* webpackChunkName: "Recovery Password" */ "../views/RecoveryPassword.vue"
       ),
     meta: {
       rule: "isPublic"
+    }
+  },
+  {
+    path: "/signup",
+    name: "SignUp",
+    component: () =>
+      import(/* webpackChunkName: "Sign Up" */ "../views/SignUp.vue"),
+    meta: {
+      rule: "isPublic",
+      title: "Cadastro"
     }
   },
   {

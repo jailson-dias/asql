@@ -18,7 +18,7 @@
                   outlined
                 ></v-text-field>
 
-                <v-btn to="/" class="mt-4 mb-3" block color="primary" large
+                <v-btn to="/login" class="mt-4 mb-3" block color="primary" large
                   >Recuperar</v-btn
                 >
               </v-form>
