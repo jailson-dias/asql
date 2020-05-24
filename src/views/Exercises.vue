@@ -1,7 +1,10 @@
 <template>
   <v-container fluid>
     <v-row class="mx-2 my-1" align="start" justify="center">
-      <exercise v-for="(exercise, index) in exercises" :key="index"></exercise>
+      <exercise-item
+        v-for="(exercise, index) in exercises"
+        :key="index"
+      ></exercise-item>
     </v-row>
     <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
       <v-tooltip left>
@@ -36,10 +39,10 @@
 </template>
 
 <script>
-import Exercise from "@/components/Exercise";
+import ExerciseItem from "@/components/ExerciseItem";
 export default {
   components: {
-    Exercise
+    ExerciseItem
   },
   data: () => ({
     dialog: false,

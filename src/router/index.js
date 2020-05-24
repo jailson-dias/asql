@@ -42,10 +42,19 @@ const routes = [
     children: [
       {
         path: "/",
-        name: "Home",
+        name: "Exercises",
+        component: () =>
+          import(/* webpackChunkName: "exercises" */ "../views/Exercises.vue"),
+        meta: {
+          rule: "isPublic"
+        }
+      },
+      {
+        path: "/exercise/:id",
+        name: "Exercise Detail",
         component: () =>
           import(
-            /* webpackChunkName: "exercises" */ "../views/student/Exercises.vue"
+            /* webpackChunkName: "exercise detail" */ "../views/ExerciseDetail.vue"
           ),
         meta: {
           rule: "isPublic"
@@ -55,9 +64,7 @@ const routes = [
         path: "/question/:id",
         name: "Question",
         component: () =>
-          import(
-            /* webpackChunkName: "question" */ "../views/student/Question.vue"
-          ),
+          import(/* webpackChunkName: "question" */ "../views/Question.vue"),
         meta: {
           rule: "isPublic"
         }

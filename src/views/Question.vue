@@ -1,78 +1,41 @@
 <template>
-  <v-container class="mx-2 my-1" fluid>
-    <v-row align="start" justify="center" class="mt-2">
-      <v-col cols>
-        <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis, ab
-          est. Expedita, incidunt sed molestiae repudiandae facere eum explicabo
-          necessitatibus ullam a quaerat quidem aliquid, eaque sit ipsam
-          quisquam aperiam!
-        </p>
-      </v-col>
-    </v-row>
-    <v-row align="stretch" justify="center">
-      <v-col cols class="mr-2">
-        <codemirror
-          ref="codemirror"
-          v-model="code"
-          :options="cmOptions"
-          @cursorActivity="cursorActivity"
-          class="codemirror-question"
-        />
-      </v-col>
-    </v-row>
-    <v-row align="stretch" justify="end">
-      <div class="col">
-        <span>Similaridade da resposta: 80%</span>
-      </div>
-      <div class="mr-6">
-        <v-btn
-          class="mr-2"
-          color="primary"
-          icon
-          :disabled="selectedCode.length < 5"
-        >
-          <v-icon>mdi-play-box-multiple</v-icon>
-        </v-btn>
-        <v-btn color="primary" icon>
-          <v-icon large>mdi-play</v-icon>
-        </v-btn>
-      </div>
-    </v-row>
-    <v-row align="stretch" justify="center">
-      <v-col cols class="mr-2">
-        <h2>Resultado da consulta</h2>
-        <v-data-table
-          :headers="headers"
-          :items="desserts"
-          disable-sort
-          fixed-header
-          calculate-widths
-          item-key="name"
-          class="elevation-1"
-        ></v-data-table>
-      </v-col>
-    </v-row>
+  <v-container fluid>
+    <div class="mx-4">
+      <v-row align="start" justify="center" class="mt-2">
+        <v-col cols>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis,
+            ab est. Expedita, incidunt sed molestiae repudiandae facere eum
+            explicabo necessitatibus ullam a quaerat quidem aliquid, eaque sit
+            ipsam quisquam aperiam!
+          </p>
+        </v-col>
+      </v-row>
+      <SQLCodeMirror />
+      <v-row align="stretch" justify="center">
+        <v-col cols class="mr-2">
+          <h2>Resultado da consulta</h2>
+          <v-data-table
+            :headers="headers"
+            :items="desserts"
+            disable-sort
+            fixed-header
+            calculate-widths
+            item-key="name"
+            class="elevation-1"
+          ></v-data-table>
+        </v-col>
+      </v-row>
+    </div>
   </v-container>
 </template>
 
 <script>
-import { codemirror } from "vue-codemirror";
-
-import "codemirror/lib/codemirror.css";
-import "codemirror/addon/hint/show-hint.css";
-import "codemirror/lib/codemirror";
-import "codemirror/mode/sql/sql";
-import "codemirror/addon/hint/show-hint";
-import "codemirror/addon/search/searchcursor";
-import "codemirror/addon/search/search";
-import "codemirror/addon/display/placeholder";
-import "codemirror/addon/hint/sql-hint";
-import "codemirror/addon/hint/anyword-hint";
+import SQLCodeMirror from "@/components/SQLCodeMirror";
 
 export default {
   components: {
-    codemirror
+    SQLCodeMirror
   },
   data: () => ({
     code: "-- Código SQL\nselect x from y;",
