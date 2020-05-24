@@ -1,19 +1,6 @@
 <template>
   <v-container class="mx-2 my-1" fluid>
-    <v-row align="start" justify="center" class="mt-3">
-      <v-col cols></v-col>
-      <h2 class="text-center">Questão {{ question }}</h2>
-      <v-col cols></v-col>
-      <v-btn
-        class="mr-4"
-        color="primary"
-        icon
-        :to="`/question/${parseInt(question) + 1}`"
-      >
-        <v-icon large>mdi-arrow-right</v-icon>
-      </v-btn>
-    </v-row>
-    <v-row align="start" justify="center">
+    <v-row align="start" justify="center" class="mt-2">
       <v-col cols>
         <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis, ab

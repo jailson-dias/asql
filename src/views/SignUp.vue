@@ -14,7 +14,6 @@
               <v-col cols="12" sm="6" class="pa-0"> </v-col>
               <v-col cols="12" sm="6" class="pa-0">
                 <v-card class="py-12 px-12 text-center" max-width="550">
-                  <!-- <img class="" src="@/assets/logo.png" alt="Logo" width="150" /> -->
                   <h1 class="headline mt-4">Cadastrar</h1>
                   <p class="font-regular mx-8 mt-4">
                     CrieCad o seu usuário para acessar a plataforma do ASQL
