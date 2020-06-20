@@ -68,6 +68,17 @@ const routes = [
         meta: {
           rule: "isPublic"
         }
+      },
+      {
+        path: "/create-exercise",
+        name: "Create Exercise",
+        component: () =>
+          import(
+            /* webpackChunkName: "create exercise" */ "../views/CreateExercise.vue"
+          ),
+        meta: {
+          rule: "isPublic"
+        }
       }
     ]
   }
