@@ -3,13 +3,15 @@
     <v-content>
       <v-container class="fill-height background-image-asql py-0" fluid>
         <v-row
-          align="center fill-height background-color-asql"
+          align="center"
           justify="center"
+          class="fill-height background-color-asql"
         >
           <v-col cols="12" sm="10" md="9">
             <v-row
-              align="center fill-height background-color-asql"
+              align="center"
               justify="center"
+              class="fill-height background-color-asql"
             >
               <v-col cols="12" sm="6" class="pa-0"> </v-col>
               <v-col cols="12" sm="6" class="pa-0">
@@ -104,8 +106,8 @@ export default {
       email: "eas@asd.asd",
       username: "asdasd",
       role: "student",
-      password: "asd",
-      confirmPassword: "asd",
+      password: "senh@BenfOrte",
+      confirmPassword: "senh@BenfOrte",
     },
     role: [
       { text: "Professor", value: "teacher" },
@@ -157,7 +159,16 @@ export default {
         username: this.form.username,
         fullname: this.form.name,
         password: this.form.password,
-      });
+      }).then(response => {
+        console.log("suc", response)
+      })
+      .catch(error => {
+        console.log(Object.keys(error))
+        console.log(error.isAxiosError)
+        if (error.isAxiosError) {
+          console.log(error.response)
+        }
+      })
     },
   },
 };

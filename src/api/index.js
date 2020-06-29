@@ -2,7 +2,7 @@ import User from "./user";
 import Exercise from "./exercise";
 import Question from "./question";
 
-const SERVER_URL = "http://localhost:3000";
+const SERVER_URL = "https://pepulli.serveousercontent.com";
 
 export const user = new User(SERVER_URL);
 export const exercise = new Exercise(SERVER_URL);

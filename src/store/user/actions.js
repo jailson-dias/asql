@@ -7,12 +7,13 @@ const signIn = ({ commit }, { username, password }) => {
   });
 };
 
-const createTeacher = (context, { fullname, email, username, password }) => {
+const createTeacher = ({ commit }, { fullname, email, username, password }) => {
   console.log("createTeacher");
   return user
     .createTeacher({ fullname, email, username, password })
     .then((response) => {
-      console.log(response);
+      console.log("create then", response);
+      commit("saveUser", { username });
     });
 };
 

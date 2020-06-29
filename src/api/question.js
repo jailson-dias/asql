@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const EXERCISE_PATH = "/exercise";
+const EXERCISE_PATH = "exercise";
 
 class Question {
   constructor(basepath) {

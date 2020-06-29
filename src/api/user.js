@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const USER_PATH = "/user";
+const USER_PATH = "user";
 
 class User {
   constructor(basepath) {
@@ -18,11 +18,25 @@ class User {
 
   createTeacher({ fullname, email, username, password }) {
     const createTeacherURL = `${this.basepath}/teacher`;
-
     return axios
       .post(createTeacherURL, { fullname, email, username, password })
       .then((response) => {
-        return response.data;
+        return {
+          status: response.status,
+          message: response.data.message,
+          data: response.data.data,
+        };
+      })
+      .catch((error) => {
+        if (error.isAxiosError) {
+          return {
+            status: error.response.status,
+            message: error.response.data.message,
+            data: error.response.data.data,
+          };
+        }
+
+        throw error;
       });
   }
 
