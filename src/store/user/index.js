@@ -8,18 +8,26 @@ const user = {
       email: "",
       username: "",
     },
-    token: "",
+    token: null,
   },
   mutations: {
-    saveUser(state, { user, token }) {
-      const { fullname, email, username } = user;
+    saveUser(state, { fullname, email, username }) {
       state.user = {
         fullname,
         email,
         username,
       };
-      state.token = token;
     },
+
+    saveToken(state, { token }) {
+      state.token = token;
+      localStorage.setItem('token', token)
+    },
+
+    logOut(state) {
+      state.token = null
+      localStorage.removeItem('token')
+    }
   },
   actions,
   getters: {},

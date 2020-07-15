@@ -3,7 +3,8 @@
     <v-content>
       <v-container class="fill-height background-image-asql py-0" fluid>
         <v-row
-          align="center fill-height background-color-asql"
+          class="fill-height background-color-asql"
+          align="center"
           justify="center"
         >
           <v-col cols="12" sm="9" md="5">
@@ -38,7 +39,12 @@
                   >
                 </v-row>
 
-                <v-btn to="/" class="mt-6 mb-3" block color="primary" large
+                <v-btn
+                  class="mt-6 mb-3"
+                  block
+                  color="primary"
+                  large
+                  @click="login"
                   >Login</v-btn
                 >
               </v-form>
@@ -51,25 +57,45 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data: () => ({
     valid: true,
-    email: "",
-    password: "",
-    checkbox: true
+    email: "emaadffi@afdg.chc",
+    password: "!@#$%ˆ&*()",
   }),
 
-  methods: {
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+  created() {
+    try {
+      this.getToken()
+      this.$router.push("/");
+    } catch (err) {
+      console.log()
     }
-  }
+  },
+
+  methods: {
+    ...mapActions("user", ["signIn", "getToken"]),
+    login() {
+      this.signIn({
+        email: this.email,
+        password: this.password,
+      })
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          console.log(Object.keys(error));
+          console.log(error.isAxiosError);
+          if (error.isAxiosError) {
+            console.log(error.response);
+            return alert(error.response.data.message[0].message)
+          }
+          alert("Service unavailable")
+        });
+    },
+  },
 };
 </script>
 

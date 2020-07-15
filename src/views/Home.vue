@@ -6,7 +6,18 @@
       </div>
       <v-list dense>
         <template v-for="item in items">
-          <v-list-item :key="item.text" link :to="item.to">
+          <v-list-item v-if="item.to" :key="item.text" link :to="item.to">
+            <v-list-item-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title>
+                {{ item.text }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item v-else :key="item.text" @click="action(item.click)">
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -48,14 +59,37 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data: () => ({
     drawer: null,
     items: [
       { icon: "mdi-contacts", text: "Atividades", to: "/" },
-      { icon: "mdi-history", text: "Finalizadas", to: "/te" },
-      { icon: "mdi-content-copy", text: "Sair", to: "/login" }
+      { icon: "mdi-history", text: "Finalizadas", to: "/te"},
+      { icon: "mdi-content-copy", text: "Sair", click: "sair"}
     ]
-  })
+  }),
+
+  created() {
+    try {
+      this.getToken()
+    } catch (err) {
+      this.$router.push("/login");
+    }
+  },
+
+  methods: {
+    ...mapActions("user", ["getToken", "logOut"]),
+    sair() {
+      console.log('saiu')
+      this.logOut()
+      console.log('saiu')
+      this.$router.push("/login")
+      console.log('saiu')
+    },
+    action(name) {
+      this[name]()
+    }
+  }
 };
 </script>

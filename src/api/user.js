@@ -8,10 +8,10 @@ class User {
     this.signIn = this.signIn.bind(this);
   }
 
-  signIn({ username, password }) {
+  signIn({ email, password }) {
     const signInURL = `${this.basepath}/signin`;
 
-    return axios.post(signInURL, { username, password }).then((response) => {
+    return axios.post(signInURL, { email, password }).then((response) => {
       return response.data;
     });
   }

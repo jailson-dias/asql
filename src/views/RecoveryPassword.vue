@@ -3,7 +3,8 @@
     <v-content>
       <v-container class="fill-height background-image-asql py-0" fluid>
         <v-row
-          align="center fill-height background-color-asql"
+          class="fill-height background-color-asql"
+          align="center"
           justify="center"
         >
           <v-col cols="12" sm="9" md="5">
