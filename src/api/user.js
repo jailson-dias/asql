@@ -21,22 +21,7 @@ class User {
     return axios
       .post(createTeacherURL, { fullname, email, username, password })
       .then((response) => {
-        return {
-          status: response.status,
-          message: response.data.message,
-          data: response.data.data,
-        };
-      })
-      .catch((error) => {
-        if (error.isAxiosError) {
-          return {
-            status: error.response.status,
-            message: error.response.data.message,
-            data: error.response.data.data,
-          };
-        }
-
-        throw error;
+        return response.data;
       });
   }
 

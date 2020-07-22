@@ -11,44 +11,45 @@ const createTeacher = ({ commit }, { fullname, email, username, password }) => {
   console.log("createTeacher");
   return user
     .createTeacher({ fullname, email, username, password })
-    .then((response) => {
-      console.log("create then", response);
-      commit("saveUser", { fullname, email, username });
+    .then(() => {
+      commit("saveUser", { fullname, email, username, role: "Teacher" });
     });
 };
 
-const createStudent = (context, { fullname, email, username, password }) => {
+const createStudent = ({ commit }, { fullname, email, username, password }) => {
   console.log("createStudent");
   return user
     .createStudent({ fullname, email, username, password })
-    .then((response) => {
-      console.log(response);
+    .then(() => {
+      commit("saveUser", { fullname, email, username, role: "Student" });
     });
 };
 
 const getToken = ({ state, commit }) => {
   if (state.token) {
-    return state.token
+    return state.token;
   }
 
-  let token = localStorage.getItem('token')
+  let token = localStorage.getItem("token");
 
   if (token) {
+    let user = JSON.parse(localStorage.getItem("user"));
     commit("saveToken", token);
-    return token
+    commit("saveUser", user);
+    return token;
   }
 
-  throw new Error('User not authenticated')
-}
+  throw new Error("User not authenticated");
+};
 
-const logOut = ({commit}) => {
-  commit("logOut")
-}
+const logOut = ({ commit }) => {
+  commit("logOut");
+};
 
 export default {
   signIn,
   createTeacher,
   createStudent,
   getToken,
-  logOut
+  logOut,
 };

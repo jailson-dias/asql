@@ -103,11 +103,11 @@ export default {
     formValid: false,
     form: {
       name: "name de teste",
-      email: "eas@asd.asd",
+      email: "emaadffi@afdg.chc",
       username: "asdasd",
-      role: "student",
-      password: "senh@BenfOrte",
-      confirmPassword: "senh@BenfOrte",
+      role: "teacher",
+      password: "!@#$%ˆ&*()",
+      confirmPassword: "!@#$%ˆ&*()",
     },
     role: [
       { text: "Professor", value: "teacher" },
@@ -154,21 +154,43 @@ export default {
   methods: {
     ...mapActions("user", ["createTeacher", "createStudent"]),
     createAccount() {
-      this.createTeacher({
-        email: this.form.email,
-        username: this.form.username,
-        fullname: this.form.name,
-        password: this.form.password,
-      }).then(response => {
-        console.log("suc", response)
-      })
-      .catch(error => {
-        console.log(Object.keys(error))
-        console.log(error.isAxiosError)
-        if (error.isAxiosError) {
-          console.log(error.response)
-        }
-      })
+      if (this.form.role == "teacher") {
+        this.createTeacher({
+          email: this.form.email,
+          username: this.form.username,
+          fullname: this.form.name,
+          password: this.form.password,
+        })
+          .then(() => {
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            console.log(error.isAxiosError);
+            if (error.isAxiosError) {
+              console.log(error.response);
+              return alert(error.response.data.message[0].message);
+            }
+            alert("Service unavailable");
+          });
+      } else {
+        this.createStudent({
+          email: this.form.email,
+          username: this.form.username,
+          fullname: this.form.name,
+          password: this.form.password,
+        })
+          .then(() => {
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            console.log(error.isAxiosError);
+            if (error.isAxiosError) {
+              console.log(error.response);
+              return alert(error.response.data.message[0].message);
+            }
+            alert("Service unavailable");
+          });
+      }
     },
   },
 };

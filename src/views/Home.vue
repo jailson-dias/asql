@@ -33,21 +33,21 @@
 
     <v-app-bar app color="blue darken-3" dark>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <h3 class="ml-2">Questão 4</h3>
+      <h3 class="ml-2">{{ header.title.text }}</h3>
       <v-spacer />
       <div class="d-flex flex-row">
-        <v-btn class="d-none d-sm-flex text-capitalize white--text" text>
+        <v-btn v-if="header.prev" class="d-none d-sm-flex text-capitalize white--text" text>
           <v-icon left large>mdi-chevron-left</v-icon>
           Anterior
         </v-btn>
-        <v-btn class="d-none d-sm-flex text-capitalize white--text mr-1" text>
+        <v-btn v-if="header.next" class="d-none d-sm-flex text-capitalize white--text mr-1" text>
           Próxima
           <v-icon right large>mdi-chevron-right</v-icon>
         </v-btn>
-        <v-btn class="d-flex d-sm-none text-capitalize white--text" icon>
+        <v-btn v-if="header.prev" class="d-flex d-sm-none text-capitalize white--text" icon>
           <v-icon left large>mdi-chevron-left</v-icon>
         </v-btn>
-        <v-btn class="d-flex d-sm-none text-capitalize white--text mr-1" icon>
+        <v-btn v-if="header.next" class="d-flex d-sm-none text-capitalize white--text mr-1" icon>
           <v-icon right large>mdi-chevron-right</v-icon>
         </v-btn>
       </div>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   data: () => ({
     drawer: null,
@@ -78,14 +78,17 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState("exercise", {
+      header: (state) => state.header,
+    })
+  },
+
   methods: {
     ...mapActions("user", ["getToken", "logOut"]),
     sair() {
-      console.log('saiu')
       this.logOut()
-      console.log('saiu')
       this.$router.push("/login")
-      console.log('saiu')
     },
     action(name) {
       this[name]()

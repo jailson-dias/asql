@@ -1,11 +1,13 @@
 <template>
   <v-container fluid>
-    <v-container>
+    <v-container v-if="exercise">
       <v-row align="start" justify="center">
         <v-col cols>
-          <p>Código da atividade: <b>X43DAS</b></p>
+          <p>
+            Código da atividade: <b>{{ exercise.code }}</b>
+          </p>
         </v-col>
-        <v-btn color="primary" text :to="`/exercise/3`">
+        <v-btn color="primary" text :to="`/exercise/${exercise._id}`">
           Visualizar respostas
         </v-btn>
       </v-row>
@@ -15,7 +17,7 @@
         <v-row>
           <v-col cols="12" md="6" sm="8" xs="10">
             <v-text-field
-              v-model="exercise.title"
+              v-model="exerciseToEdit.title"
               :rules="titleRules"
               :counter="titleCounter"
               label="Titulo da atividade"
@@ -27,7 +29,7 @@
         <v-row>
           <v-col cols>
             <v-textarea
-              v-model="exercise.description"
+              v-model="exerciseToEdit.description"
               :rules="descriptionRules"
               label="Descrição da atividade"
               no-resize
@@ -40,7 +42,7 @@
         <v-row>
           <v-col cols="12" md="4">
             <v-menu
-              :close-on-content-click="false"
+              close-on-content-click
               transition="scale-transition"
               offset-y
               max-width="290px"
@@ -48,40 +50,25 @@
             >
               <template v-slot:activator="{ on }">
                 <v-text-field
-                  v-model="exercise.limitFormated"
+                  v-model="exerciseToEdit.limitFormated"
                   label="Data limite da atividade"
                   persistent-hint
                   v-on="on"
                   required
-                  @blur="exercise.limit = parseDate(exercise.limitFormated)"
+                  outlined
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="exercise.limit"
+                v-model="exerciseToEdit.limit"
                 no-title
+                :min="minDate"
+                color="primary"
+                reactive
                 @input="datepicker = false"
               ></v-date-picker>
             </v-menu>
-            <p>
-              Date in ISO format: <strong>{{ exercise.limit }}</strong>
-            </p>
           </v-col>
-          <!-- <v-col cols="12" md="4">
-            <v-text-field
-              v-model="exercise.limit"
-              :rules="emailRules"
-              label="Data limite da atividade"
-              required
-            ></v-text-field>
-          </v-col> -->
         </v-row>
-        <!-- <v-row justify="center">
-          <v-date-picker
-            v-model="exercise.limit"
-            :allowed-dates="allowedDates"
-            locale="pt-BR"
-          ></v-date-picker>
-        </v-row> -->
       </v-container>
     </v-form>
   </v-container>
@@ -90,48 +77,75 @@
 <script>
 const EXERCISE_TITLE_MAX_LENGTH = 40;
 
+import { mapActions } from "vuex";
+
 export default {
-  data: vm => ({
+  props: {
+    exercise: Object,
+  },
+
+  data: (vm) => ({
     valid: false,
     datepicker: false,
-    exercise: {
+    exerciseToEdit: {
       title: "",
       description: "",
       limit: new Date().toISOString().slice(0, 10),
-      limitFormated: vm.formatDate(new Date().toISOString().slice(0, 10))
+      limitFormated: vm.formatDate(new Date().toISOString().slice(0, 10)),
     },
     titleCounter: EXERCISE_TITLE_MAX_LENGTH,
     titleRules: [
-      v => !!v || "O título é obrigatório",
-      v =>
+      (v) => !!v || "O título é obrigatório",
+      (v) =>
         v.length <= EXERCISE_TITLE_MAX_LENGTH ||
-        `O título deve ter no máximo ${EXERCISE_TITLE_MAX_LENGTH} caracteres`
+        `O título deve ter no máximo ${EXERCISE_TITLE_MAX_LENGTH} caracteres`,
     ],
-    descriptionRules: [v => !!v || "A descrição é obrigatória"]
+    descriptionRules: [(v) => !!v || "A descrição é obrigatória"],
   }),
+
+  created() {
+    this.setTitle({ text: "Criar atividade" });
+  },
+
+  computed: {
+    minDate() {
+      const now = new Date(Date.now()).toISOString()
+      console.log(now)
+      // return `${now.getDate()}/${now.getMonth()}`
+      return now
+    },
+    limitFormated() {
+      return this.formatDate(this.exerciseToEdit.limit)
+    }
+  },
+
   methods: {
-    allowedDates: day => {
+    ...mapActions("exercise", ["setTitle"]),
+
+    allowedDates: (day) => {
       let dayUTC = new Date(day).toISOString().slice(0, 10);
       let todayUTC = new Date().toISOString().slice(0, 10);
       return dayUTC >= todayUTC;
     },
+
     formatDate(date) {
       if (!date) return null;
 
       const [year, month, day] = date.split("-");
       return `${day}/${month}/${year}`;
     },
+
     parseDate(date) {
       if (!date) return null;
 
       const [day, month, year] = date.split("/");
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    }
+    },
   },
   watch: {
-    date() {
-      this.dateFormatted = this.formatDate(this.date);
-    }
-  }
+    "exerciseToEdit.limit"(value) {
+      this.exerciseToEdit.limitFormated = this.formatDate(value);
+    },
+  },
 };
 </script>

@@ -4,9 +4,11 @@
       <exercise-item
         v-for="(exercise, index) in exercises"
         :key="index"
+        :exercise="exercise"
+        :role="role"
       ></exercise-item>
     </v-row>
-    <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
+    <v-btn bottom color="pink" dark fab fixed right @click="openAddOrCreateExercise">
       <v-tooltip left>
         <template v-slot:activator="{ on }">
           <v-btn icon large target="_blank" v-on="on">
@@ -40,13 +42,50 @@
 
 <script>
 import ExerciseItem from "@/components/ExerciseItem";
+import { mapState, mapActions } from "vuex";
+
 export default {
   components: {
-    ExerciseItem
+    ExerciseItem,
   },
+
   data: () => ({
     dialog: false,
-    exercises: [{}, {}, {}]
-  })
+  }),
+
+  created() {
+    try {
+      const token = this.getToken();
+      this.getExercises({ token });
+      if (this.role == "Teacher") {
+        this.setTitle({ text: "Atividades em andamento" });
+      } else {
+        this.setTitle({ text: "Minhas atividades" });
+      }
+    } catch (err) {
+      console.log("error getting exercises", err);
+    }
+  },
+
+  computed: {
+    ...mapState("exercise", {
+      exercises: (state) => state.exercises,
+    }),
+    ...mapState("user", {
+      role: (state) => state.user.role,
+    }),
+  },
+
+  methods: {
+    ...mapActions("exercise", ["getExercises", "setTitle"]),
+    ...mapActions("user", ["getToken", "logOut"]),
+    openAddOrCreateExercise() {
+      if (this.role == "Teacher") {
+        this.$router.push("/create-exercise");
+      } else {
+        this.dialog = !this.dialog
+      }
+    }
+  },
 };
 </script>

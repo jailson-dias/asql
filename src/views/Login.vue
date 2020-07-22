@@ -34,9 +34,9 @@
                   <v-btn to="/signup" text color="primary" class="pl-0"
                     >Cadastrar</v-btn
                   >
-                  <v-btn to="/recovery" text color="primary" class="pr-0"
+                  <!-- <v-btn to="/recovery" text color="primary" class="pr-0"
                     >Recuperar senha</v-btn
-                  >
+                  > -->
                 </v-row>
 
                 <v-btn
@@ -86,8 +86,6 @@ export default {
           this.$router.push("/");
         })
         .catch((error) => {
-          console.log(Object.keys(error));
-          console.log(error.isAxiosError);
           if (error.isAxiosError) {
             console.log(error.response);
             return alert(error.response.data.message[0].message)
