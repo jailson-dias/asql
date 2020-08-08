@@ -19,12 +19,13 @@ const user = {
         username,
         role,
       };
-
+      // console.log("user", state.user)
       localStorage.setItem("user", JSON.stringify(state.user));
     },
 
     saveToken(state, { token }) {
       state.token = token;
+      // console.log("token", token)
       localStorage.setItem("token", token);
     },
 

@@ -16,16 +16,19 @@
             <!-- <span class="mr-2">Data limite: {{exercise.dateLimit}}</span>
               <span class="mr-2">Código da atividade: {{exercise.code}}</span> -->
             <!-- <v-icon color="primary">mdi-check</v-icon> -->
-            <!-- <v-btn color="primary" text :to="`/exercise/3`">
-                Resolver
-              </v-btn> -->
             <p class="body-1 text-justify mb-2">
               Código da atividade: <b>{{ exercise.code }}</b>
             </p>
           </v-col>
-          <v-btn v-if="role == 'Teacher'" color="primary" text to="/teste">
+          <v-btn v-if="role == 'Teacher'" color="primary" text :to="`/exercise/${exercise._id}/populate`">
+            Popular
+          </v-btn>
+          <v-btn v-if="role == 'Teacher'" color="primary" text :to="`/exercise/${exercise._id}/edit`">
             Editar
           </v-btn>
+          <!-- <v-btn v-else color="primary" text :to="`/exercise/{exercise._id}`">
+            Resolver
+          </v-btn> -->
         </v-row>
       </v-list-item-content>
     </v-list-item>
@@ -39,18 +42,6 @@ export default {
     role: String
   },
   data: () => ({
-    questions: [
-      {
-        title: "Question 1 asfjkahsdfkjhasdjkf",
-        complete: 55.98657,
-        id: 4,
-      },
-      {
-        title: "Questão 2",
-        complete: 100,
-      },
-      { id: 7 },
-    ],
   }),
   methods: {
     getExerciseTitle(title) {

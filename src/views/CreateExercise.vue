@@ -1,21 +1,9 @@
 <template>
   <v-container fluid>
-    <v-container v-if="exercise">
-      <v-row align="start" justify="center">
-        <v-col cols>
-          <p>
-            Código da atividade: <b>{{ exercise.code }}</b>
-          </p>
-        </v-col>
-        <v-btn color="primary" text :to="`/exercise/${exercise._id}`">
-          Visualizar respostas
-        </v-btn>
-      </v-row>
-    </v-container>
     <v-form v-model="valid">
       <v-container>
         <v-row>
-          <v-col cols="12" md="6" sm="8" xs="10">
+          <v-col cols="12" md="8" sm="12" xs="12">
             <v-text-field
               v-model="exerciseToEdit.title"
               :rules="titleRules"
@@ -25,22 +13,8 @@
               required
             ></v-text-field>
           </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols>
-            <v-textarea
-              v-model="exerciseToEdit.description"
-              :rules="descriptionRules"
-              label="Descrição da atividade"
-              no-resize
-              rows="5"
-              outlined
-              required
-            ></v-textarea>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="12" md="4">
+
+          <v-col cols="12"  md="4" sm="12" xs="12">
             <v-menu
               close-on-content-click
               transition="scale-transition"
@@ -69,6 +43,27 @@
             </v-menu>
           </v-col>
         </v-row>
+        <v-row>
+          <v-col cols>
+            <v-textarea
+              v-model="exerciseToEdit.description"
+              :rules="descriptionRules"
+              label="Descrição da atividade"
+              no-resize
+              rows="5"
+              outlined
+              required
+            ></v-textarea>
+          </v-col>
+        </v-row>
+        <v-btn
+          class="mt-6 mb-3"
+          block
+          color="primary"
+          large
+          @click="create"
+          >Criar</v-btn
+        >
       </v-container>
     </v-form>
   </v-container>
@@ -76,6 +71,7 @@
 
 <script>
 const EXERCISE_TITLE_MAX_LENGTH = 40;
+// import SQLCodeMirror from "@/components/SQLCodeMirror";
 
 import { mapActions } from "vuex";
 
@@ -84,12 +80,16 @@ export default {
     exercise: Object,
   },
 
+  // components: {
+  //   SQLCodeMirror
+  // },
+
   data: (vm) => ({
     valid: false,
     datepicker: false,
     exerciseToEdit: {
-      title: "",
-      description: "",
+      title: "teasfmmsafms saf sd fsda",
+      description: "asdf sadf sa d fa sg fs dg as g  sfdg as  gas dg",
       limit: new Date().toISOString().slice(0, 10),
       limitFormated: vm.formatDate(new Date().toISOString().slice(0, 10)),
     },
@@ -101,6 +101,9 @@ export default {
         `O título deve ter no máximo ${EXERCISE_TITLE_MAX_LENGTH} caracteres`,
     ],
     descriptionRules: [(v) => !!v || "A descrição é obrigatória"],
+
+    code: "-- Script de povoamento\nCREATE TABLE x;",
+    placeholder: "Escreva seu script de povoamento aqui"
   }),
 
   created() {
@@ -109,18 +112,16 @@ export default {
 
   computed: {
     minDate() {
-      const now = new Date(Date.now()).toISOString()
-      console.log(now)
-      // return `${now.getDate()}/${now.getMonth()}`
-      return now
+      return new Date(Date.now()).toISOString();
     },
     limitFormated() {
-      return this.formatDate(this.exerciseToEdit.limit)
-    }
+      return this.formatDate(this.exerciseToEdit.limit);
+    },
   },
 
   methods: {
-    ...mapActions("exercise", ["setTitle"]),
+    ...mapActions("exercise", ["setTitle", "createExercise"]),
+    ...mapActions("user", ["getToken"]),
 
     allowedDates: (day) => {
       let dayUTC = new Date(day).toISOString().slice(0, 10);
@@ -141,6 +142,19 @@ export default {
       const [day, month, year] = date.split("/");
       return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
+
+    create() {
+      this.createExercise({
+        token: this.getToken(),
+        title: this.exerciseToEdit.title,
+        description: this.exerciseToEdit.description,
+        dateLimit: this.exerciseToEdit.limitFormated
+      }).then(() => {
+        this.$router.push("/")
+      }).catch(() => {
+        alert("Erro criando a atividade, tente novamente mais tarde")
+      })
+    }
   },
   watch: {
     "exerciseToEdit.limit"(value) {

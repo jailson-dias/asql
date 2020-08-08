@@ -3,7 +3,7 @@ import { user } from "../../api/index";
 const signIn = ({ commit }, { email, password }) => {
   return user.signIn({ email, password }).then((response) => {
     commit("saveUser", response.data.user);
-    commit("saveToken", response.data.token);
+    commit("saveToken", { token: response.data.token });
   });
 };
 
@@ -27,14 +27,17 @@ const createStudent = ({ commit }, { fullname, email, username, password }) => {
 
 const getToken = ({ state, commit }) => {
   if (state.token) {
+    // console.log("state token", state.token)
     return state.token;
   }
 
   let token = localStorage.getItem("token");
 
-  if (token) {
+  // console.log("token", token)
+
+  if (token && token != "null" && token != "undefined") {
     let user = JSON.parse(localStorage.getItem("user"));
-    commit("saveToken", token);
+    commit("saveToken", { token });
     commit("saveUser", user);
     return token;
   }

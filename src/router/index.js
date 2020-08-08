@@ -50,6 +50,28 @@ const routes = [
         }
       },
       {
+        path: "/exercise/:id/populate",
+        name: "Populate Exercise",
+        component: () =>
+          import(
+            /* webpackChunkName: "exercise detail" */ "../views/ExercisePopulate.vue"
+          ),
+        meta: {
+          rule: "isPublic"
+        }
+      },
+      {
+        path: "/exercise/:id/edit",
+        name: "Edit Exercise",
+        component: () =>
+          import(
+            /* webpackChunkName: "exercise detail" */ "../views/ExerciseDetail.vue"
+          ),
+        meta: {
+          rule: "isPublic"
+        }
+      },
+      {
         path: "/exercise/:id",
         name: "Exercise Detail",
         component: () =>

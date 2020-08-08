@@ -11,7 +11,7 @@
         />
       </v-col>
     </v-row>
-    <v-row justify="end">
+    <!-- <v-row justify="end">
       <v-col cols>
         <span>Similaridade da resposta: 80%</span>
       </v-col>
@@ -30,7 +30,7 @@
           </v-btn>
         </div>
       </slot>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
@@ -49,11 +49,17 @@ import "codemirror/addon/hint/sql-hint";
 import "codemirror/addon/hint/anyword-hint";
 
 export default {
+  props: {
+    defaultCode: String,
+    defaultPlaceholder: String
+  },
+
   components: {
     codemirror
   },
-  data: () => ({
-    code: "-- Código SQL\nselect x from y;",
+
+  data: (vm) => ({
+    code: vm.defaultCode || "-- Código SQL\nselect x from y;",
     cmOptions: {
       mode: "text/x-sql",
       lineNumbers: true,
@@ -66,10 +72,11 @@ export default {
         Ctrl: "autocomplete"
       },
       foldGutter: true,
-      placeholder: "Escreva sua solução aqui"
+      placeholder: vm.defaultPlaceholder || "Escreva sua solução aqui"
     },
     selectedCode: ""
   }),
+
   methods: {
     cursorActivity(codemirror) {
       this.selectedCode = codemirror.getSelection();

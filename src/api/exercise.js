@@ -22,6 +22,16 @@ class Exercise {
       });
   }
 
+  populate(exerciseId, { populationScript }) {
+    const populateURL = `${this.basepath}/${exerciseId}/populate`;
+
+    return axios
+      .post(populateURL, { populationScript })
+      .then((response) => {
+        return response.data;
+      });
+  }
+
   list() {
     const listURL = `${this.basepath}`;
 
