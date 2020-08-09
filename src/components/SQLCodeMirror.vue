@@ -81,6 +81,12 @@ export default {
     cursorActivity(codemirror) {
       this.selectedCode = codemirror.getSelection();
     }
+  },
+
+  watch: {
+    code: function (val) {
+      this.$emit('updateCode', val)
+    }
   }
 };
 </script>

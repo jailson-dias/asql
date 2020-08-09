@@ -21,7 +21,7 @@
     <v-container>
       <v-row>
         <v-col cols>
-          <SQLCodeMirror :defaultCode="code" :defaultPlaceholder="placeholder">
+          <SQLCodeMirror :defaultCode="code" :defaultPlaceholder="placeholder" @updateCode="updateCode">
             <!-- <template v-slot:buttons>
             <v-btn text color="primary" class="mr-2">
               Visualizar consulta
@@ -90,7 +90,12 @@ export default {
     ...mapActions("exercise", ["setTitle", "getExerciseById", "populateExercise"]),
     ...mapActions("user", ["getToken"]),
 
+    updateCode(code) {
+      this.code = code
+    },
+
     populate() {
+      console.log(this.code)
       this.populateExercise({
         token: this.token,
         exerciseId: this.id,
@@ -98,7 +103,7 @@ export default {
       }).then(() => {
         this.$router.push(`/exercise/${this.id}`)
       }).catch(() => {
-        alert("Erro populando a atividade, tente novamente mais tarde")
+        alert("Erro populando a atividade, verifique seu código e tente novamente")
       })
     },
   },
